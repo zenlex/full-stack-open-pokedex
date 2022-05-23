@@ -58,10 +58,10 @@ jobs:
           TAG_CONTEXT: branch
 
   discord_notify:
-      needs: [simple_deployment_pipeline, tag_release]
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: 'buld and deploy'
+    needs: [simple_deployment_pipeline, tag_release]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        title: 'buld and deploy'
