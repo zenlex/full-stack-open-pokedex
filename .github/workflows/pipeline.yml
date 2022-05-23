@@ -41,6 +41,11 @@ jobs:
           healthcheck: "https://fsopdcicd.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: discord notify
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: 'buld and deploy'
   
   tag_release:
     if: ${{github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')}}
@@ -56,12 +61,8 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           RELEASE_BRANCHES: main
           TAG_CONTEXT: branch
-
-  discord_notify:
-    needs: [simple_deployment_pipeline, tag_release]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: sarisia/actions-status-discord@v1
+      - name: discord notify
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: 'buld and deploy'
+          title: 'tag release'
