@@ -42,7 +42,6 @@ jobs:
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
       - name: discord notify
-        if: ${{ failure() }}
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
